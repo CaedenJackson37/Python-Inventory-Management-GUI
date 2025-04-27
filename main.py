@@ -9,6 +9,8 @@ This application is a GUI for a restaurant inventory management system.
 """
 import time
 
+import pandas as pd
+
 from tkinter import *
 from tkinter import messagebox
 
@@ -31,7 +33,7 @@ class Inventory(EasyFrame):
         self.product_image = PhotoImage(file="product.png")
         self.supplier_image = PhotoImage(file="supplier.png")
 
-        """Home Label"""
+        """Title Label"""
         Label(self, text="Inventory Management", image=self.title_image, compound="left",
               font=("Arial", 20), bg="beige", fg="navajowhite3").grid(row=0, column=0, columnspan=3, sticky="EW", padx=10, pady=0)
 
@@ -93,8 +95,10 @@ class Inventory(EasyFrame):
         self.hireDate = Entry(popup, width=25)
         self.hireDate.grid(row=4, column=1, padx=10)
 
-        Button(popup, text="Add Employee", command=self.add_employee).grid(row=5, column=0, pady=15)
-        Button(popup, text="View Employees", command=self.view_employees_window).grid(row=5, column=1, pady=15)
+        Button(popup, text="Save to Excel", command=self.employee_excel).grid(row=5, column=0, padx=10)
+        Button(popup, text="Add Employee", command=self.add_employee).grid(row=5, column=1, pady=15)
+        Button(popup, text="View Employees", command=self.view_employees_window).grid(row=5, column=2, pady=15)
+
 
     """Function to add Employee"""
     def add_employee(self):
@@ -134,6 +138,13 @@ class Inventory(EasyFrame):
         for emp in self.employees:
             Label(popup, text=f"{emp['name']} (ID: {emp['id']}) - {emp['type']} - Hired: {emp['hire_date']}").pack(anchor="w", padx=20)
 
+    """Function to Save to Excel"""
+    def employee_excel(self):
+        employee_df = pd.DataFrame(self.employees)
+        excel_file_path = 'output.xlsx'
+        employee_df.to_excel(excel_file_path, index=False)
+        print(f"DataFrame successfully saved to {excel_file_path}")
+
     """Function for the Product Window"""
     def open_product_window(self):
         popup = Toplevel(self)
@@ -158,8 +169,9 @@ class Inventory(EasyFrame):
         self.proType.set("Select")
         OptionMenu(popup, self.proType, "In-Stock", "Out-of-Stock").grid(row=3, column=1, sticky="W", padx=10)
 
-        Button(popup, text="Add Product", command=self.add_product).grid(row=4, column=0, pady=15)
-        Button(popup, text="View Products", command=self.view_product_window).grid(row=4, column=1, pady=15)
+        Button(popup, text="Save to Excel", command=self.product_excel).grid(row=4, column=0, padx=10)
+        Button(popup, text="Add Product", command=self.add_product).grid(row=4, column=1, pady=15)
+        Button(popup, text="View Products", command=self.view_product_window).grid(row=4, column=2, pady=15)
 
     """Function to add Product"""
     def add_product(self):
@@ -196,11 +208,18 @@ class Inventory(EasyFrame):
         for pro in self.products:
             Label(popup, text=f"{pro['name']} (ID: {pro['id']}) - {pro['type']}").pack(anchor="w", padx=20)
 
+    """Function to Save to Excel"""
+    def product_excel(self):
+        product_df = pd.DataFrame(self.products)
+        excel_file_path = 'output.xlsx'
+        product_df.to_excel(excel_file_path, index=False)
+        print(f"DataFrame successfully saved to {excel_file_path}")
+
     """Function for the Supplier Window"""
     def open_supplier_window(self):
         popup = Toplevel(self)
         popup.title("Supplier Management")
-        popup.geometry("400x200")
+        popup.geometry("500x200")
         popup.configure(bg="white")
         popup.resizable(False, False)
 
@@ -218,9 +237,9 @@ class Inventory(EasyFrame):
         self.hireDate = Entry(popup, width=25)
         self.hireDate.grid(row=4, column=1, padx=10)
 
-
-        Button(popup, text="Add Supplier", command=self.add_supplier).grid(row=5, column=0, pady=15)
-        Button(popup, text="View Supplier", command=self.view_supplier_window).grid(row=5, column=1, pady=15)
+        Button(popup, text="Save to Excel", command=self.supplier_excel).grid(row=5, column=0, padx=10)
+        Button(popup, text="Add Supplier", command=self.add_supplier).grid(row=5, column=1, pady=15)
+        Button(popup, text="View Supplier", command=self.view_supplier_window).grid(row=5, column=2, pady=15)
 
     """Function to add Supplier"""
     def add_supplier(self):
@@ -255,6 +274,13 @@ class Inventory(EasyFrame):
 
         for sup in self.supplier:
             Label(popup, text=f"{sup['name']} (ID: {sup['id']}) - {sup['hire_date']}").pack(anchor="w", padx=20)
+
+    """Function to Save to Excel"""
+    def supplier_excel(self):
+        supplier_df = pd.DataFrame(self.supplier)
+        excel_file_path = 'output.xlsx'
+        supplier_df.to_excel(excel_file_path, index=False)
+        print(f"DataFrame successfully saved to {excel_file_path}")
 
 """Launches the GUI"""
 Inventory().mainloop()
