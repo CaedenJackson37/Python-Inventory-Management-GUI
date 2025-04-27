@@ -7,9 +7,13 @@ Short Desc:   This program is my final project of developing a working GUI Breez
 This application is a GUI for a restaurant inventory management system.
 
 """
-from breezypythongui import EasyFrame
+import time
+
 from tkinter import *
 from tkinter import messagebox
+
+from breezypythongui import EasyFrame
+
 
 class Inventory(EasyFrame):
 
@@ -19,30 +23,47 @@ class Inventory(EasyFrame):
         """Lists for Employees, Products, and Suppliers"""
         self.employees = []
         self.products = []
-        self.suppliers = []
+        self.supplier = []
 
-        """Title Label"""
-        headerLabel = self.addLabel(text="Inventory Management System", row=0, column=0, columnspan=4, sticky="NSEW")
-        headerLabel["font"] = ("Arial", 20)
-        headerLabel["bg"] = "blue"
-        headerLabel["fg"] = "white"
-
-        """Home Image"""
-        home_image_Label = self.addLabel(text="", row=1, column=0, sticky="W")
-        self.image = PhotoImage(file="home.png")
-        home_image_Label["image"] = self.image
+        """Images for Home, Employees, Products, and Suppliers"""
+        self.home_image = PhotoImage(file="home.png")
+        self.employee_image = PhotoImage(file="employee.png")
+        self.product_image = PhotoImage(file="product.png")
+        self.supplier_image = PhotoImage(file="supplier.png")
 
         """Home Label"""
-        homeLabel = self.addLabel(text="Home", row=1, column=1, sticky="W")
-        homeLabel["font"] = ("Arial", 20)
-        homeLabel["bg"] = "blue"
-        homeLabel["fg"] = "white"
+        Label(self, text="Home", image=self.home_image, compound="left",
+              font=("Arial", 20), bg="beige", fg="white").grid(row=0, column=0, columnspan=3, sticky="EW", padx=10, pady=0)
+
+        """Time Label"""
+        self.timeLabel = self.addLabel(text="", row=1, column=0, columnspan=3, sticky="EW")
+        self.timeLabel["font"] = ("Arial", 20)
+        self.timeLabel["bg"] = "grey"
+        self.timeLabel["fg"] = "white"
+        self.timeLabel["anchor"] = "center"
 
 
-        """Buttons for Employee, Product, and Supplier Windows"""
-        self.addButton(text="Employee", row=3, column=0, command=self.open_employee_window)
-        self.addButton(text="Product", row=3, column=1, command=self.open_product_window)
-        self.addButton(text="Supplier", row=3, column=2, command=self.open_supplier_window)
+        """Buttons for Employees, Products, and Suppliers"""
+        self.emp_btn = self.addButton(text="Employee", row=3, column=0,command=self.open_employee_window)
+        self.emp_btn.config(image=self.employee_image, compound="left")
+        self.emp_btn.grid(row=2, column=0, sticky="W", padx=10, pady=10)
+
+        self.prod_btn = self.addButton(text="Product", row=3, column=1, command=self.open_product_window)
+        self.prod_btn.config(image=self.product_image, compound="left")
+        self.prod_btn.grid(row=3, column=0, sticky="W", padx=10, pady=10)
+
+        self.supp_btn = self.addButton(text="Supplier", row=3, column=2, command=self.open_supplier_window)
+        self.supp_btn.config(image=self.supplier_image, compound="left")
+        self.supp_btn.grid(row=4, column=0, sticky="W", padx=10, pady=10)
+
+        """Calls the time function to allow it to show up"""
+        self.update_time()
+
+    """Function to show the current time"""
+    def update_time(self):
+        current_time = time.strftime("%H:%M %S")
+        self.timeLabel["text"] = current_time
+        self.after(1000, self.update_time)
 
     """Function for Employee Window"""
     def open_employee_window(self):
@@ -52,7 +73,7 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Employee Management", bg="blue", fg="white", font=("Arial", 16, "bold")).grid(
+        Label(popup, text="Employee Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(
             row=0, column=0, columnspan=2, pady=10)
 
         Label(popup, text="Employee Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
@@ -121,7 +142,7 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Product Management", bg="blue", fg="white", font=("Arial", 16, "bold")).grid(
+        Label(popup, text="Product Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(
             row=0, column=0, columnspan=2, pady=10)
 
         Label(popup, text="Product Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
@@ -160,7 +181,7 @@ class Inventory(EasyFrame):
         self.proName.delete(0, END)
         self.proID.delete(0, END)
         self.proType.set("Select")
-    
+
     """Function to view the Product Window"""
     def view_product_window(self):
         if not self.products:
@@ -183,9 +204,57 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Supplier Management", bg="blue", fg="white", font=("Arial", 16, "bold")).place(x=200, y=30, anchor="center")
-        Button(popup, text="Exit", command=popup.destroy).place(x=200, y=150, anchor="center")
+        Label(popup, text="Supplier Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2,pady=10)
 
+        Label(popup, text="Supplier Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
+        self.supName = Entry(popup, width=25)
+        self.supName.grid(row=1, column=1, padx=10)
+
+        Label(popup, text="Supplier ID:", bg="white").grid(row=2, column=0, sticky="E", padx=10)
+        self.supID = Entry(popup, width=25)
+        self.supID.grid(row=2, column=1, padx=10)
+
+        Label(popup, text="Hire Date (YYYY-MM-DD):", bg="white").grid(row=4, column=0, sticky="E", padx=10)
+        self.hireDate = Entry(popup, width=25)
+        self.hireDate.grid(row=4, column=1, padx=10)
+
+
+        Button(popup, text="Add Supplier", command=self.add_supplier).grid(row=5, column=0, pady=15)
+        Button(popup, text="View Supplier", command=self.view_supplier_window).grid(row=5, column=1, pady=15)
+
+    """Function to add Supplier"""
+    def add_supplier(self):
+        name = self.supName.get().strip()
+        sup_id = self.supID.get().strip()
+        hire_date = self.hireDate.get()
+
+        if not name or not sup_id or not hire_date:
+            messagebox.showerror("Missing Info", "Please fill in all fields.")
+            return
+
+        self.supplier.append({
+            "name": name,
+            "id": sup_id,
+            "hire_date": hire_date
+        })
+
+        messagebox.showinfo("Supplier Added", f"Supplier '{name}' (ID: {sup_id}) added successfully.")
+        self.supName.delete(0, END)
+        self.supID.delete(0, END)
+        self.hireDate.delete(0, END)
+
+    def view_supplier_window(self):
+        if not self.supplier:
+            messagebox.showinfo("No Supplier", "No supplier records yet.")
+            return
+
+        popup = Toplevel(self)
+        popup.title("Supplier List")
+        popup.geometry("400x300")
+        Label(popup, text="Supplier Records", font=("Arial", 14, "bold")).pack(pady=10)
+
+        for sup in self.supplier:
+            Label(popup, text=f"{sup['name']} (ID: {sup['id']}) - {sup['hire_date']}").pack(anchor="w", padx=20)
 
 """Launches the GUI"""
 Inventory().mainloop()
