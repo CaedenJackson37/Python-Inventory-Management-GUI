@@ -10,7 +10,10 @@ This was my final project for my Intro to SDEV class. Using the tkinter, time, a
 
 - <b>Python</b> 
 - <b>Pycharm</b>
-- <b>breezypythongui<b>
+- <b>breezypythongui</b>
+- <b>pandas</b>
+- <b>tkinter</b>
+
 <h2>Environments Used </h2>
 
 - <b>Windows 11</b> (21H2)
