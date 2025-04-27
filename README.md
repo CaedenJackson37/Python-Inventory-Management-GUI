@@ -2,7 +2,7 @@
 <h1>Inventory Management GUI</h1>
 
 <h2>Description</h2>
-This was my final project for my Intro to SDEV class. Using the breezypythongui library, I created an inventory management system GUI.
+This was my final project for my Intro to SDEV class. Using the tkinter, time, and breezypythongui library, I created an inventory management system GUI.
 <br />
 
 
