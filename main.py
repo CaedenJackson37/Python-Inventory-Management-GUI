@@ -26,19 +26,19 @@ class Inventory(EasyFrame):
         self.supplier = []
 
         """Images for Home, Employees, Products, and Suppliers"""
-        self.home_image = PhotoImage(file="home.png")
+        self.title_image = PhotoImage(file="title.png")
         self.employee_image = PhotoImage(file="employee.png")
         self.product_image = PhotoImage(file="product.png")
         self.supplier_image = PhotoImage(file="supplier.png")
 
         """Home Label"""
-        Label(self, text="Home", image=self.home_image, compound="left",
-              font=("Arial", 20), bg="beige", fg="white").grid(row=0, column=0, columnspan=3, sticky="EW", padx=10, pady=0)
+        Label(self, text="Inventory Management", image=self.title_image, compound="left",
+              font=("Arial", 20), bg="beige", fg="navajowhite3").grid(row=0, column=0, columnspan=3, sticky="EW", padx=10, pady=0)
 
         """Time Label"""
         self.timeLabel = self.addLabel(text="", row=1, column=0, columnspan=3, sticky="EW")
         self.timeLabel["font"] = ("Arial", 20)
-        self.timeLabel["bg"] = "grey"
+        self.timeLabel["bg"] = "light goldenrod"
         self.timeLabel["fg"] = "white"
         self.timeLabel["anchor"] = "center"
 
@@ -61,7 +61,7 @@ class Inventory(EasyFrame):
 
     """Function to show the current time"""
     def update_time(self):
-        current_time = time.strftime("%H:%M %S")
+        current_time = time.strftime("%H:%M:%S")
         self.timeLabel["text"] = current_time
         self.after(1000, self.update_time)
 
@@ -73,8 +73,8 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Employee Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(
-            row=0, column=0, columnspan=2, pady=10)
+        Label(popup, text="Employee Management", bg="beige", fg="navajowhite3", font=("Arial", 16, "bold")).grid(
+            row=0, column=0, columnspan=2, sticky="EW", pady=10)
 
         Label(popup, text="Employee Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
         self.empName = Entry(popup, width=25)
@@ -142,8 +142,8 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Product Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(
-            row=0, column=0, columnspan=2, pady=10)
+        Label(popup, text="Product Management", bg="beige", fg="navajowhite3", font=("Arial", 16, "bold")).grid(
+            row=0, column=0, columnspan=2, sticky= "EW", pady=10)
 
         Label(popup, text="Product Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
         self.proName = Entry(popup, width=25)
@@ -204,7 +204,7 @@ class Inventory(EasyFrame):
         popup.configure(bg="white")
         popup.resizable(False, False)
 
-        Label(popup, text="Supplier Management", bg="beige", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2,pady=10)
+        Label(popup, text="Supplier Management", bg="beige", fg="navajowhite3", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2,sticky="EW",pady=10)
 
         Label(popup, text="Supplier Name:", bg="white").grid(row=1, column=0, sticky="E", padx=10)
         self.supName = Entry(popup, width=25)
