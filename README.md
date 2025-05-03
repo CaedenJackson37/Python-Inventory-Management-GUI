@@ -6,6 +6,9 @@ This was my final project for my Intro to SDEV class. Using the tkinter, time, a
 <br />
 
 
+<img src="FinalProject.png" alt="GUI Example">
+
+
 <h2>Languages and Utilities Used</h2>
 
 - <b>Python</b> 
